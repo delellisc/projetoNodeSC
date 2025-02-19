@@ -1,4 +1,28 @@
 # Projeto Node - Sistemas Corporativos
+
+## Instalação do Node.js no Linux
+Download e instalação do nvm (Node Version Manager):
+```sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+\. "$HOME/.nvm/nvm.sh"
+```
+
+Download e instalação do Node.js (Versão 22.14.0 LTS):
+```sh
+nvm install 22
+```
+
+Após o extenso processo de instalação do Node, verifica-se a versão desejada foi instalada:
+```sh
+node -v
+```
+
+Saída esperada:
+```sh
+v22.14.0
+```
+
+## Criando e inicializando o projeto
 Criando o projeto:
 ```sh
 mkdir projetoNPMSC
