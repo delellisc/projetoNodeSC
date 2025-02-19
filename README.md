@@ -50,7 +50,7 @@ Em seguida, realizei a criação do repositório remoto por meio da interface we
 GET - http://localhost:8080/api/alunos
 
 Reposta no terminal do servidor:
-```json
+```sh
 alunos:  [
   { idaluno: 1, nome: 'Fábio' },
   { idaluno: 4, nome: 'Samuel' },
@@ -63,45 +63,52 @@ alunos:  [
 
 ### Retornar um aluno via ID
 GET - http://localhost:8080/api/alunos/1
+
 Reposta no terminal do servidor:
-```json
+```sh
 findById id =  1
 aluno encontrado:  { idaluno: 1, nome: 'Fábio' }
 ```
 
 ### Criar um aluno
 POST - http://localhost:8080/api/alunos
+
 Entrada do POSTMAN:
 ```json
 {
     "nome":"Riquelme"
 }
 ```
+
 Resposta no terminal do servidor:
-```json
+```sh
 created aluno:  { id: undefined, idaluno: undefined, nome: 'Riquelme' }
 ```
 
 ### Atualizar um aluno
 PUT - http://localhost:8080/api/alunos/4
+
 Entrada do POSTMAN:
 ```json
 {
     "nome":"Isaque"
 }
 ```
+
 Resposta no terminal do servidor:
-```json
+```sh
 updated aluno:  { id: '4', idaluno: undefined, nome: 'Isaque' }
 ```
 
 ### Remover um aluno
 DELETE - http://localhost:8080/api/alunos/36
+
 Resposta no terminal do servidor:
-```json
+```sh
 deleted aluno with idaluno:  36
 ```
 
 ### Remover todos os alunos
 DELETE - http://localhost:8080/api/alunos
-Apenas por fins didáticos, não realizarei uma requisição para essa rota agora.
+
+Rota criada apenas por fins didáticos, não realizarei uma requisição para essa rota agora.
