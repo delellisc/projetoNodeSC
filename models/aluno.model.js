@@ -1,6 +1,8 @@
 const pool = require("./db.js");
 /* const client = await pool.connect(); */
 
+const Emprestimo = require("./emprestimo.model.js");
+
 // constructor
 const Aluno = function (aluno) {
     this.idaluno = aluno.idaluno;
@@ -86,6 +88,7 @@ Aluno.updateById = async (id, aluno, result) => {
 };
 Aluno.remove = async (id, result) => {
     await pool.query("BEGIN");
+    Emprestimo.removeFromAluno(id);
     pool.query("DELETE FROM aluno WHERE idaluno = $1", [id], async (err, res)=> {
         if (err) {
             console.log("error: ", err);

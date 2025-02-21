@@ -97,25 +97,25 @@ Emprestimo.updateDevolutionDate = async (id, emprestimo, result) => {
         }
     );
 };
-Emprestimo.remove = async (id, result) => {
+Emprestimo.remove = async (id, /* result */) => {
     await pool.query("BEGIN");
     pool.query("DELETE FROM emprestimo WHERE idemprestimo = $1", [id], async (err, res)=> {
         if (err) {
             console.log("error: ", err);
             await pool.query("ROLLBACK");
-            result(null, err);
+            /* result(null, err); */
             return;
         }
         if (res.affectedRows == 0) {
             // not found Emprestimo with the id
             await pool.query("ROLLBACK");
-            result({ kind: "not_found" }, null);
+            /* result({ kind: "not_found" }, null); */
             return;
         }
         await pool.query("COMMIT");
-         ;
+
         console.log("deleted emprestimo with idemprestimo: ", id);
-        result(null, res);
+        /* result(null, res); */
     });
 };
 
@@ -129,9 +129,46 @@ Emprestimo.removeAll = async result => {
             return;
         }
         await pool.query("COMMIT");
-         ;
+        
         console.log(`deleted ${res.affectedRows} emprestimos`);
         result(null, res);
+    });
+};
+
+Emprestimo.removeFromLivro = async idlivro => {
+    await pool.query("BEGIN");
+    pool.query("DELETE FROM emprestimo WHERE idlivro = $1", [idlivro], async (err, res)=> {
+        if (err) {
+            console.log("error: ", err);
+            await pool.query("ROLLBACK");
+            return;
+        }
+        if (res.affectedRows == 0) {
+            // not found Emprestimo with the idlivro
+            await pool.query("ROLLBACK");
+            return;
+        }
+        await pool.query("COMMIT");
+        console.log("deleted emprestimo with idlivro: ", idlivro);
+    });
+};
+
+Emprestimo.removeFromAluno = async idaluno => {
+    await pool.query("BEGIN");
+    pool.query("DELETE FROM emprestimo WHERE idaluno = $1", [idaluno], async (err, res)=> {
+        if (err) {
+            console.log("error: ", err);
+            await pool.query("ROLLBACK");
+            return;
+        }
+        if (res.affectedRows == 0) {
+            // not found Emprestimo with the idaluno
+            await pool.query("ROLLBACK");
+            return;
+        }
+        await pool.query("COMMIT");
+
+        console.log("deleted emprestimo with idaluno: ", idaluno);
     });
 };
 

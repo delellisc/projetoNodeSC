@@ -1,6 +1,8 @@
 const pool = require("./db.js");
 /* const client = await pool.connect(); */
 
+const Emprestimo = require("./emprestimo.model.js");
+
 // constructor
 const Livro = function (livro) {
     this.idlivro = livro.idlivro;
@@ -8,8 +10,6 @@ const Livro = function (livro) {
 };
 
 Livro.create = async (newLivro, result) => {
-    console.log(newLivro.nomelivro);
-    console.log(newLivro);
     await pool.query("BEGIN");
     pool.query("INSERT INTO livro(nomelivro) VALUES ($1)", [newLivro.nomelivro], async (err, res) => {
         if (err) {
@@ -86,6 +86,7 @@ Livro.updateById = async (id, livro, result) => {
     );
 };
 Livro.remove = async (id, result) => {
+    Emprestimo.removeFromLivro(id);
     await pool.query("BEGIN");
     pool.query("DELETE FROM livro WHERE idlivro = $1", [id], async (err, res)=> {
         if (err) {
