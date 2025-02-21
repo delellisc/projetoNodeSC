@@ -32,6 +32,8 @@ app.get("/", (req, res) => {
 });
 
 require("./routes/aluno.routes")(app);
+require("./routes/livro.routes")(app);
+require("./routes/emprestimo.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

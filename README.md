@@ -69,7 +69,7 @@ Em seguida, realizei a criação do repositório remoto por meio da interface we
 | DELETE          | http://localhost:8080/api/alunos   | Remove todos os alunos (apenas para fins didáticos pois este não é um serviço recomendado) |
 | DELETE          | http://localhost:8080/api/alunos/1 | Exclui o registro em aluno cujo idaluno = 1 (o valor 1 é apenas um exemplo)                |
 
-## Exemplos de requisições
+## Requisições alunos
 ### Retornar todos os alunos
 GET - http://localhost:8080/api/alunos
 
@@ -136,3 +136,97 @@ deleted aluno with idaluno:  36
 DELETE - http://localhost:8080/api/alunos
 
 Rota criada apenas por fins didáticos, não realizarei uma requisição para essa rota agora.
+
+## Requisições livros
+### Retornar todos os livros
+GET - http://localhost:8080/api/livros
+
+Reposta no terminal do servidor:
+```sh
+livros:  [
+  { idlivro: 1, nome: 'Fábio' },
+  { idlivro: 4, nome: 'Samuel' },
+  { idlivro: 36, nome: 'Cano' },
+  { idlivro: 37, nome: 'Árias' },
+  { idlivro: 40, nome: 'Cannobbio' },
+  { idlivro: 41, nome: 'Lelê' }
+]
+```
+
+### Retornar um livro via ID
+GET - http://localhost:8080/api/livros/1
+
+Reposta no terminal do servidor:
+```sh
+findById id =  1
+livros:  [ { idlivro: '1', nomelivro: 'Dr. Stone' } ]
+```
+
+### Criar um livro
+POST - http://localhost:8080/api/livros
+
+Entrada do POSTMAN:
+```json
+{
+    "nomelivro":"Black Cover"
+}
+```
+
+Resposta no terminal do servidor:
+```sh
+created livro:  { id: undefined, idlivro: undefined, nome: 'Riquelme' }
+```
+
+### Atualizar um livro
+PUT - http://localhost:8080/api/livros/4
+
+Entrada do POSTMAN:
+```json
+{
+    "nomelivro":"Sun Ken Rock"
+}
+```
+
+Resposta no terminal do servidor:
+```sh
+{ nomelivro: 'Sun Ken Rock' }
+updated livro:  { id: '1', idlivro: undefined, nomelivro: 'Sun Ken Rock' }
+```
+
+### Remover um livro
+DELETE - http://localhost:8080/api/livros/36
+
+Resposta no terminal do servidor:
+```sh
+deleted livro with idlivro:  36
+```
+
+### Remover todos os livros
+DELETE - http://localhost:8080/api/livros
+
+Rota criada apenas por fins didáticos, não realizarei uma requisição para essa rota agora.
+
+## Requisições empréstimos
+### Criação de um empréstimo
+https://localhost:3000/api/emprestimos
+
+### Retornar todos os empréstimos
+https://localhost:3000/api/emprestimos
+
+### Retornar um empréstimo a partir do seu id
+https://localhost:3000/api/emprestimos/:id
+
+### Atualizar um empréstimo por meio do seu id
+https://localhost:3000/api/emprestimos/:id
+
+### Remover um empréstimo por meio do seu id
+https://localhost:3000/api/emprestimos/:id
+
+### Remover todos os empréstimos
+https://localhost:3000/api/emprestimos
+
+### Retornar empréstimos por meio do id do aluno
+https://localhost:3000/api/emprestimos/aluno/:id
+
+### Retornar empréstimos por meio do id do livro
+https://localhost:3000/api/emprestimos/livro/:id

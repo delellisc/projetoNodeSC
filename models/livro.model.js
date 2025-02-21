@@ -2,32 +2,33 @@ const pool = require("./db.js");
 /* const client = await pool.connect(); */
 
 // constructor
-const Aluno = function (aluno) {
-    this.idaluno = aluno.idaluno;
-    this.nome = aluno.nome;
+const Livro = function (livro) {
+    this.idlivro = livro.idlivro;
+    this.nomelivro = livro.nomelivro;
 };
 
-Aluno.create = async (newAluno, result) => {
+Livro.create = async (newLivro, result) => {
+    console.log(newLivro.nomelivro);
+    console.log(newLivro);
     await pool.query("BEGIN");
-    pool.query("INSERT INTO aluno(nome) VALUES ($1)", [newAluno.nome], async (err, res) => {
+    pool.query("INSERT INTO livro(nomelivro) VALUES ($1)", [newLivro.nomelivro], async (err, res) => {
         if (err) {
             console.log("error: ", err);
             await pool.query("ROLLBACK");
             result(err, null);
             return;
         }
-        console.log("created aluno: ", {
-            id: res.insertId, ...newAluno
+        console.log("created livro: ", {
+            id: res.insertId, ...newLivro
         });
         await pool.query("COMMIT");
-         
-        result(null, { id: res.insertId, ...newAluno });
+        result(null, { id: res.insertId, ...newLivro });
     });
 };
 
-Aluno.findById = (id, result) => {
+Livro.findById = (id, result) => {
     console.log('findById id = ', id)
-    pool.query('SELECT * FROM aluno WHERE idaluno = $1', [id], (err,
+    pool.query('SELECT * FROM livro WHERE idlivro = $1', [id], (err,
         res) => {
         if (err) {
             //throw error
@@ -36,20 +37,20 @@ Aluno.findById = (id, result) => {
             return;
         }
         if (res.rows.length) {
-            console.log("aluno encontrado: ", res.rows[0]);
+            console.log("livro encontrado: ", res.rows[0]);
             result(null, res.rows[0]);
             return;
         }
-        // not found aluno with the id
-        console.log("aluno nao encontrado: res.length = ", res);
+        // not found livro with the id
+        console.log("livro nao encontrado: res.length = ", res);
         result({ kind: "not_found" }, null);
     });
 };
 
-Aluno.getAll = (nome, result) => {
-    let query = "SELECT * FROM aluno";
-    if (nome) {
-        query += " WHERE nome LIKE '%${nome}%'";
+Livro.getAll = (nomelivro, result) => {
+    let query = "SELECT * FROM livro";
+    if (nomelivro) {
+        query += " WHERE nomelivro LIKE '%${nomelivro}%'";
     }
     pool.query(query, (err, res) => {
         if (err) {
@@ -57,14 +58,14 @@ Aluno.getAll = (nome, result) => {
             result(null, err);
             return;
         }
-        console.log("alunos: ", res.rows);
+        console.log("livros: ", res.rows);
         result(null, res);
     });
 };
 
-Aluno.updateById = async (id, aluno, result) => {
+Livro.updateById = async (id, livro, result) => {
     await pool.query("BEGIN");
-    pool.query("UPDATE aluno SET nome = $1 WHERE idaluno = $2", [aluno.nome, id], async (err, res) => {
+    pool.query("UPDATE livro SET nomelivro = $1 WHERE idlivro = $2", [livro.nomelivro, id], async (err, res) => {
             if (err) {
                 console.log("error: ", err);
                 await pool.query("ROLLBACK");
@@ -72,21 +73,21 @@ Aluno.updateById = async (id, aluno, result) => {
                 return;
             }
             if (res.affectedRows == 0) {
-                // not found Aluno with the id
+                // not found Livro with the id
                 await pool.query("ROLLBACK");
                 result({ kind: "not_found" }, null);
                 return;
             }
             await pool.query("COMMIT");
-             
-            console.log("updated aluno: ", { id: id, ...aluno });
-            result(null, { id: id, ...aluno });
+             ;
+            console.log("updated livro: ", { id: id, ...livro });
+            result(null, { id: id, ...livro });
         }
     );
 };
-Aluno.remove = async (id, result) => {
+Livro.remove = async (id, result) => {
     await pool.query("BEGIN");
-    pool.query("DELETE FROM aluno WHERE idaluno = $1", [id], async (err, res)=> {
+    pool.query("DELETE FROM livro WHERE idlivro = $1", [id], async (err, res)=> {
         if (err) {
             console.log("error: ", err);
             await pool.query("ROLLBACK");
@@ -94,21 +95,21 @@ Aluno.remove = async (id, result) => {
             return;
         }
         if (res.affectedRows == 0) {
-            // not found Aluno with the id
+            // not found Livro with the id
             await pool.query("ROLLBACK");
             result({ kind: "not_found" }, null);
             return;
         }
         await pool.query("COMMIT");
-         
-        console.log("deleted aluno with idaluno: ", id);
+         ;
+        console.log("deleted livro with idlivro: ", id);
         result(null, res);
     });
 };
 
-Aluno.removeAll = async result => {
+Livro.removeAll = async result => {
     await pool.query("COMMIT");
-    pool.query("DELETE FROM aluno", async (err, res) => {
+    pool.query("DELETE FROM livro", async (err, res) => {
         if (err) {
             console.log("error: ", err);
             await pool.query("ROLLBACK");
@@ -116,10 +117,10 @@ Aluno.removeAll = async result => {
             return;
         }
         await pool.query("COMMIT");
-         
-        console.log(`deleted ${res.affectedRows} alunos`);
+         ;
+        console.log(`deleted ${res.affectedRows} livros`);
         result(null, res);
     });
 };
 
-module.exports = Aluno
+module.exports = Livro
